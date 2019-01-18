@@ -1,0 +1,75 @@
+* {
+  font-family: 'Anonymous Pro';
+}
+
+.app {
+  display: flex;
+  flex-flow: column;
+  /* font-family: 'Anonymous Pro'; */
+}
+.today {
+  width: 600px;
+  min-height: 200px;
+  border: 1px solid rgb(0, 240, 216);
+}
+.history {
+  width: 600px;
+  height: 450px;
+  border: 1px solid rgb(174, 255, 252);
+}
+.counter {
+  display: flex;
+  flex-wrap: wrap;
+  flex-flow: column;
+}
+.counter > div {
+  margin-top: 5px;
+  margin-left: 5px;
+}
+.counter label.main {
+  display: inline-block;
+  min-width: 150px;
+}
+label.memo {
+  margin-left:220px;
+}
+.counter input {
+  width: 70px;
+}
+.addBtn {
+  margin-left: 10px;
+}
+.result {
+  display: flex;
+  justify-content: space-between;
+  align-items:flex-start;
+  margin-top: 10px;
+  border-top: 1px solid lightblue;
+  padding-top: 5px;
+}
+.total {
+  padding: 5px;
+  border: 1px solid greenyellow;
+  border-radius: 5px;
+  margin-right:5px;
+  color: rgb(85, 170, 0);
+  font-weight: bold;
+  /* height: auto; */
+  /* background: lightblue; */
+}
+
+li {
+	margin: 0;
+	padding: 0px 0 0px 15px;
+	list-style: none;
+	background-image: url("round-restaurant-24px.svg");
+	background-repeat: no-repeat;
+	background-position: left center;
+	background-size: 10px;
+}
+.rowsUl {
+  /* list-style-image: url('round-restaurant-24px.svg'); */
+  /* round-restaurant-24px.svg; */
+  margin:0;
+  padding-left: 10px;
+}
