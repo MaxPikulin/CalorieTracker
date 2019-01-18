@@ -119,6 +119,7 @@ function todayToHistory() {
     calorieTracker.today = [];
     historyRows();
     calorieTracker.todayDate = currentDate;
+    saveData();
   }
 }
 
