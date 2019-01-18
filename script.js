@@ -129,3 +129,4 @@ myCalsInput.addEventListener('keyup', myCalsHandler);
 gramsInput.addEventListener('keyup', gramsHandler);
 addBtn.addEventListener('click', addBtnHandler);
 memoInput.addEventListener('keyup', memoHandler);
+document.querySelector('.clearToday').addEventListener('click', () => {calorieTracker.today = []; saveData(); atAppStart(); rowsUl.innerHTML = ''; });
