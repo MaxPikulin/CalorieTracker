@@ -69,10 +69,10 @@ function saveData() {
 function atAppStart() {
   calorieTracker = {};
   loadData();
-  calorieTracker.todayDate == calorieTracker.todayDate || Date.now();
-  calorieTracker.today == calorieTracker.today || [];
-  calorieTracker.memo == calorieTracker.memo || '';
-  calorieTracker.calorieHistory == calorieTracker.calorieHistory || [];
+  calorieTracker.todayDate = calorieTracker.todayDate || Date.now();
+  calorieTracker.today = calorieTracker.today || [];
+  calorieTracker.memo = calorieTracker.memo || '';
+  calorieTracker.calorieHistory = calorieTracker.calorieHistory || [];
   
   todayToHistory();
   historyRows();
