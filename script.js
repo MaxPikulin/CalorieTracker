@@ -49,4 +49,3 @@ function totalHandler() {
 myCalsInput.addEventListener('keyup', myCalsHandler);
 gramsInput.addEventListener('keyup', gramsHandler);
 addBtn.addEventListener('click', addBtnHandler);
-// calsIn100Input.addEventListener('keyup', calsIn100Handler);

@@ -5,7 +5,6 @@
 .app {
   display: flex;
   flex-flow: column;
-  /* font-family: 'Anonymous Pro'; */
 }
 .today {
   width: 600px;
@@ -54,8 +53,6 @@ label.memo {
   margin-right:5px;
   color: rgb(85, 170, 0);
   font-weight: bold;
-  /* height: auto; */
-  /* background: lightblue; */
 }
 
 li {
@@ -68,8 +65,6 @@ li {
 	background-size: 10px;
 }
 .rowsUl {
-  /* list-style-image: url('round-restaurant-24px.svg'); */
-  /* round-restaurant-24px.svg; */
   margin:0;
   padding-left: 10px;
 }
