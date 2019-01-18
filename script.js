@@ -55,7 +55,9 @@ function totalHandler() {
 
 function loadData() {
   let storage = localStorage.getItem('calorieTracker');
-  calorieTracker = JSON.parse(storage) || {};
+  if (storage) {
+    calorieTracker = JSON.parse(storage) || {};
+  }
 }
 
 function saveData() {
@@ -63,14 +65,28 @@ function saveData() {
   localStorage.setItem('calorieTracker', storage);
 }
 
-function atAppStart() {  
-  loadData();  
-  if (calorieTracker && calorieTracker.today) {    
-    calorieTracker.today.forEach((row) => addTodayRow(row));
-  } else {    
-    calorieTracker = { today: [] };
-  }  
+function atAppStart() { 
+  calorieTracker = {
+    today: [],
+    memo: '',
+    calorieHistory: {},
+  } 
+  loadData();   
+  let { today, memo } = calorieTracker;
+  today.forEach((row) => addTodayRow(row));
   totalHandler();
+  memoHandler(memo);
+}
+
+function memoHandler(memo) {
+  if (typeof memo === 'string') {
+    memo = memo;
+    memoInput.value = memo;
+  } else {
+    memo = memoInput.value;
+    calorieTracker.memo = memo;
+    saveData();
+  }
 }
 
 atAppStart();
@@ -78,3 +94,4 @@ atAppStart();
 myCalsInput.addEventListener('keyup', myCalsHandler);
 gramsInput.addEventListener('keyup', gramsHandler);
 addBtn.addEventListener('click', addBtnHandler);
+memoInput.addEventListener('keyup', memoHandler);

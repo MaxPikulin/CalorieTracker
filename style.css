@@ -32,6 +32,11 @@
 label.memo {
   margin-left:220px;
 }
+input.memo {
+  font-weight: bold;
+  color: blueviolet;
+  padding-left: 3px;
+}
 .counter input {
   width: 70px;
 }
