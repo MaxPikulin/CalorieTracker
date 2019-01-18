@@ -48,7 +48,9 @@ function addTodayRow(row) {
 }
 
 function totalHandler() {
-  totalDiv.innerHTML = calorieTracker.today.reduce((acc, curr) => +acc + +curr);
+  if (calorieTracker.today.length) {
+    totalDiv.innerHTML = calorieTracker.today.reduce((acc, curr) => +acc + +curr);
+  }
 }
 
 function loadData() {
@@ -61,13 +63,13 @@ function saveData() {
   localStorage.setItem('calorieTracker', storage);
 }
 
-function atAppStart() {
-  loadData();
-  if (calorieTracker && calorieTracker.today) {
+function atAppStart() {  
+  loadData();  
+  if (calorieTracker && calorieTracker.today) {    
     calorieTracker.today.forEach((row) => addTodayRow(row));
-  } else {
+  } else {    
     calorieTracker = { today: [] };
-  }
+  }  
   totalHandler();
 }
 
