@@ -39,12 +39,39 @@ function addBtnHandler() {
   updateValues();
   calorieTracker.today.push(myCals);
   totalHandler();
-  rowsUl.innerHTML = `<li>${myCals}</li>` + rowsUl.innerHTML;
+  addTodayRow(myCals);
+  saveData();
+}
+
+function addTodayRow(row) {
+  rowsUl.innerHTML = `<li>${row}</li>` + rowsUl.innerHTML;
 }
 
 function totalHandler() {
   totalDiv.innerHTML = calorieTracker.today.reduce((acc, curr) => +acc + +curr);
 }
+
+function loadData() {
+  let storage = localStorage.getItem('calorieTracker');
+  calorieTracker = JSON.parse(storage) || {};
+}
+
+function saveData() {
+  let storage = JSON.stringify(calorieTracker);
+  localStorage.setItem('calorieTracker', storage);
+}
+
+function atAppStart() {
+  loadData();
+  if (calorieTracker && calorieTracker.today) {
+    calorieTracker.today.forEach((row) => addTodayRow(row));
+  } else {
+    calorieTracker = { today: [] };
+  }
+  totalHandler();
+}
+
+atAppStart();
 
 myCalsInput.addEventListener('keyup', myCalsHandler);
 gramsInput.addEventListener('keyup', gramsHandler);
