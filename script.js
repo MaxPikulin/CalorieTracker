@@ -1,11 +1,11 @@
 /*
-*TODO: Add way to remove row from today's calories.
-*TODO: Change view to better one, when on mobile (increase font size, layout)
-*TODO: Maybe. If note exists, total counts down to note value, if not, total as usual.
-*TODO: Maybe. Change way of filling page with data. One function to do it, it receive object with data, or global object.
-*TODO: Enter(key) to enter calories, additionally to button.
-*
-*/
+ *TODO: Add way to remove row from today's calories.
+ *TODO: Change view to better one, when on mobile (increase font size, layout)
+ *TODO: Maybe. If note exists, total counts down to note value, if not, total as usual.
+ *TODO: Maybe. Change way of filling page with data. One function to do it, it receive object with data, or global object.
+ *TODO: Enter(key) to enter calories, additionally to button.
+ *
+ */
 
 
 const calsIn100Input = document.querySelector('.calsIn100');
@@ -17,6 +17,8 @@ const addBtn = document.querySelector('.addBtn');
 const rowsUl = document.querySelector('.rowsUl');
 const totalDiv = document.querySelector('.total');
 const historyDiv = document.querySelector('.history');
+const deleteRowWindow = document.querySelector('.deleteRowWindow');
+const deleteRowConfirmBtn = document.querySelector('.deleteRowConfirmBtn');
 
 let calorieTracker = {
   today: [],
@@ -47,21 +49,27 @@ function gramsHandler() {
 }
 
 function addBtnHandler() {
+  let ts = Date.now();
   updateValues();
-  calorieTracker.today.push(myCals);
+  calorieTracker.today[ts] = myCals;
   totalHandler();
-  addTodayRow(myCals);
+  addTodayRow(myCals, Date.now());
   saveData();
 }
 
-function addTodayRow(row) {
-  rowsUl.innerHTML = `<li>${row}</li>` + rowsUl.innerHTML;
+function addTodayRow(row, timestamp) {
+  rowsUl.innerHTML = `<li data-id="${timestamp}">${row}</li>` + rowsUl.innerHTML;
 }
 
 function totalHandler() {
-  if (calorieTracker.today.length) {
-    totalDiv.innerHTML = calorieTracker.today.reduce((acc, curr) => +acc + +curr);
-  }
+  totalDiv.innerHTML = (() => {
+    var total = 0;
+    console.log(total);
+    for (let row in calorieTracker.today) {
+      total += +calorieTracker.today[row];
+    }
+    return total;
+  })();
 }
 
 function loadData() {
@@ -80,14 +88,18 @@ function atAppStart() {
   calorieTracker = {};
   loadData();
   calorieTracker.todayDate = calorieTracker.todayDate || Date.now();
-  calorieTracker.today = calorieTracker.today || [];
+  calorieTracker.today = calorieTracker.today || {};
   calorieTracker.memo = calorieTracker.memo || '';
   calorieTracker.calorieHistory = calorieTracker.calorieHistory || [];
-  
+
   todayToHistory();
   historyRows();
   let { today, memo } = calorieTracker;
-  today.forEach((row) => addTodayRow(row));
+  for (let row in today) {
+    console.log(today.value, today[row]);
+    addTodayRow(today[row], row);
+  }
+  // today.forEach((row) => addTodayRow(row));
   totalHandler();
   memoHandler(memo);
 }
@@ -104,11 +116,11 @@ function memoHandler(memo) {
 }
 
 function historyRows() {
-   let rows = '';
-   calorieTracker.calorieHistory.forEach((data) => {
-     rows += `<div>${data[1]} (${data[0]})</div>`;
-   });
-   historyDiv.innerHTML = rows;
+  let rows = '';
+  calorieTracker.calorieHistory.forEach((data) => {
+    rows += `<div>${data[1]} (${data[0]})</div>`;
+  });
+  historyDiv.innerHTML = rows;
 }
 
 function todayToHistory() {
@@ -125,12 +137,36 @@ function todayToHistory() {
     return;
   } else {
     console.log('other day');
-    calorieTracker.calorieHistory.unshift([currentDMY, calorieTracker.today.reduce((acc, curr) => +acc + +curr)]);
+    calorieTracker.calorieHistory.unshift([currentDMY, () => {
+      let total = 0;
+      for (let row in calorieTracker.today) {
+        total += calorieTracker.today[row];
+      }
+      return total;
+    }]); //calorieTracker.today.reduce((acc, curr) => +acc + +curr)]);
     calorieTracker.today = [];
     historyRows();
     calorieTracker.todayDate = currentDate;
     saveData();
   }
+}
+
+function deleteRow(event) {
+  event.stopPropagation();
+  deleteRowWindow.dataset.rowid = event.target.dataset.id;
+  deleteRowWindow.classList.remove('hidden');
+}
+
+function deleteRowConfirmBtnHandler(event) {
+  let parent = event.target.parentNode;
+  delete calorieTracker.today[parent.dataset.rowid];
+  rowsUl.innerHTML = '';
+  for (let row in calorieTracker.today) {
+    console.log(calorieTracker.today.value, calorieTracker.today[row]);
+    addTodayRow(calorieTracker.today[row], row);
+  }
+  saveData();
+  totalHandler();
 }
 
 atAppStart();
@@ -139,4 +175,17 @@ myCalsInput.addEventListener('keyup', myCalsHandler);
 gramsInput.addEventListener('keyup', gramsHandler);
 addBtn.addEventListener('click', addBtnHandler);
 memoInput.addEventListener('keyup', memoHandler);
-document.querySelector('.clearToday').addEventListener('click', () => {calorieTracker.today = []; saveData(); atAppStart(); rowsUl.innerHTML = ''; });
+rowsUl.addEventListener('click', deleteRow);
+deleteRowConfirmBtn.addEventListener('click', deleteRowConfirmBtnHandler);
+window.addEventListener('click', (e) => {
+  if (e.target != deleteRowWindow) {
+    deleteRowWindow.classList.add('hidden');
+  }
+});
+
+document.querySelector('.clearToday').addEventListener('click', () => {
+  calorieTracker.today = {};
+  saveData();
+  atAppStart();
+  rowsUl.innerHTML = '';
+});
