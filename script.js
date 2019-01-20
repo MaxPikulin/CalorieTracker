@@ -101,8 +101,8 @@ function atAppStart() {
       calorieTracker.today[i++] = row;
     });
     saveData();
-    rowsUl.innerHTML = '';
     atAppStart();
+    return;
   } else {
     console.log('object');
   }
