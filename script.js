@@ -1,3 +1,13 @@
+/*
+*TODO: Add way to remove row from today's calories.
+*TODO: Change view to better one, when on mobile (increase font size, layout)
+*TODO: Maybe. If note exists, total counts down to note value, if not, total as usual.
+*TODO: Maybe. Change way of filling page with data. One function to do it, it receive object with data, or global object.
+*TODO: Enter(key) to enter calories, additionally to button.
+*
+*/
+
+
 const calsIn100Input = document.querySelector('.calsIn100');
 const gramsInput = document.querySelector('.grams');
 const myCalsInput = document.querySelector('.myCals');
