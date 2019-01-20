@@ -91,6 +91,20 @@ function atAppStart() {
   calorieTracker.today = calorieTracker.today || {};
   calorieTracker.memo = calorieTracker.memo || '';
   calorieTracker.calorieHistory = calorieTracker.calorieHistory || [];
+  
+  if (calorieTracker.today.constructor === Array) {
+    console.log('array');
+    let i = 0;
+    let arr = calorieTracker.today;
+    calorieTracker.today = {};
+    arr.forEach((row) => {
+      calorieTracker.today[i++] = row;
+    });
+    saveData();
+    atAppStart();
+  } else {
+    console.log('object');
+  }
 
   todayToHistory();
   historyRows();
