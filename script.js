@@ -53,7 +53,7 @@ function addBtnHandler() {
   updateValues();
   calorieTracker.today[ts] = myCals;
   totalHandler();
-  addTodayRow(myCals, Date.now());
+  addTodayRow(myCals, ts);
   saveData();
 }
 
@@ -114,7 +114,6 @@ function atAppStart() {
     console.log(today.value, today[row]);
     addTodayRow(today[row], row);
   }
-  // today.forEach((row) => addTodayRow(row));
   totalHandler();
   memoHandler(memo);
 }
@@ -158,7 +157,7 @@ function todayToHistory() {
         total += calorieTracker.today[row];
       }
       return total;
-    }]); //calorieTracker.today.reduce((acc, curr) => +acc + +curr)]);
+    }]);
     calorieTracker.today = [];
     historyRows();
     calorieTracker.todayDate = currentDate;
