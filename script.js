@@ -7,7 +7,6 @@
  *
  */
 
-
 const calsIn100Input = document.querySelector('.calsIn100');
 const gramsInput = document.querySelector('.grams');
 const myCalsInput = document.querySelector('.myCals');
@@ -20,13 +19,10 @@ const historyDiv = document.querySelector('.history');
 const deleteRowWindow = document.querySelector('.deleteRowWindow');
 const deleteRowConfirmBtn = document.querySelector('.deleteRowConfirmBtn');
 
-let calorieTracker = {
-  today: [],
-};
-
-let calsIn100 = calsIn100Input.value;
-let grams = gramsInput.value;
-let myCals = myCalsInput.value;
+let calorieTracker = {};
+let calsIn100 = '';
+let grams = '';
+let myCals = '';
 
 function updateValues() {
   calsIn100 = calsIn100Input.value;
@@ -34,7 +30,11 @@ function updateValues() {
   myCals = myCalsInput.value;
 }
 
-function myCalsHandler() {
+function myCalsHandler(e) {
+  if (e.keyCode && (e.keyCode == 13)) {
+    addBtnHandler();
+    return;
+  }
   updateValues();
   if (calsIn100 && myCals) {
     gramsInput.value = Math.floor(100 / (calsIn100 / myCals));
@@ -64,7 +64,7 @@ function addTodayRow(row, timestamp) {
 function totalHandler() {
   totalDiv.innerHTML = (() => {
     var total = 0;
-    console.log(total);
+    // console.log(total);
     for (let row in calorieTracker.today) {
       total += +calorieTracker.today[row];
     }
@@ -85,7 +85,7 @@ function saveData() {
 }
 
 function atAppStart() {
-  calorieTracker = {};
+  // calorieTracker = {};
   loadData();
   calorieTracker.todayDate = calorieTracker.todayDate || Date.now();
   calorieTracker.today = calorieTracker.today || {};
@@ -93,7 +93,7 @@ function atAppStart() {
   calorieTracker.calorieHistory = calorieTracker.calorieHistory || [];
   
   if (calorieTracker.today.constructor === Array) {
-    console.log('array');
+    // console.log('array');
     let i = 0;
     let arr = calorieTracker.today;
     calorieTracker.today = {};
@@ -104,14 +104,14 @@ function atAppStart() {
     atAppStart();
     return;
   } else {
-    console.log('object');
+    // console.log('object');
   }
 
   todayToHistory();
   historyRows();
   let { today, memo } = calorieTracker;
   for (let row in today) {
-    console.log(today.value, today[row]);
+    // console.log(today.value, today[row]);
     addTodayRow(today[row], row);
   }
   totalHandler();
@@ -147,10 +147,10 @@ function todayToHistory() {
     return;
   }
   if (new Date(todayDate).toLocaleDateString('en-GB') == currentDMY) {
-    console.log('same day');
+    // console.log('same day');
     return;
   } else {
-    console.log('other day');
+    // console.log('other day');
     calorieTracker.calorieHistory.unshift([currentDMY, () => {
       let total = 0;
       for (let row in calorieTracker.today) {
@@ -176,7 +176,7 @@ function deleteRowConfirmBtnHandler(event) {
   delete calorieTracker.today[parent.dataset.rowid];
   rowsUl.innerHTML = '';
   for (let row in calorieTracker.today) {
-    console.log(calorieTracker.today.value, calorieTracker.today[row]);
+    // console.log(calorieTracker.today.value, calorieTracker.today[row]);
     addTodayRow(calorieTracker.today[row], row);
   }
   saveData();
