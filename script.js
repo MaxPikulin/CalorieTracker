@@ -47,9 +47,7 @@ function gramsHandler(calsIn100, grams) {
 
 function addBtnHandler(myCals) {
   let ts = Date.now();
-  calorieTracker.today[ts] = myCals;
-  totalHandler();
-  addTodayRow(myCals, ts);
+  return { [ts]: myCals };
 }
 
 function addTodayRow(row, timestamp) {
@@ -59,7 +57,7 @@ function addTodayRow(row, timestamp) {
 function addAllTodayRows(today) {
   let result = '';
   for (let row in today) {
-    result = addTodayRow(today[row], row) + result;
+    result += addTodayRow(today[row], row);
   }
   return result;
 }
@@ -84,10 +82,12 @@ function saveData(calorieTracker, name) {
 }
 
 function memoHandler(memo) {
+  if (!memo) return '';
   return memo;
 }
 
 function historyRows(calorieHistory) {
+  if (!calorieHistory) return '';
   let rows = '';
   calorieHistory.forEach((data) => {
     rows += `<div>${data[1]} (${data[0]})</div>`;
@@ -126,7 +126,6 @@ function deleteRowConfirmBtnHandler(event) {
 function mainHandler(event) {
   let target = event.target;
 
-  console.log(event);
   if (target.parentNode == rowsUl) {
     deleteRow(event);
   } else if (!deleteRowWindow.classList.contains('hidden') && target != deleteRowWindow) {
@@ -136,7 +135,7 @@ function mainHandler(event) {
   if (event.type == 'click') {
     switch (true) {
       case target == addBtn:
-        addBtnHandler(myCals);
+        calorieTracker.today = Object.assign(addBtnHandler(myCals), calorieTracker.today);
         break;
       case target == deleteRowConfirmBtn:
         delete calorieTracker.today[deleteRowConfirmBtnHandler(event)];
@@ -148,7 +147,7 @@ function mainHandler(event) {
   } else if (event.type == 'keyup') {
     switch (true) {
       case (event.keyCode == 13 && target == myCalsInput):
-        addBtnHandler(myCals);
+        calorieTracker.today = Object.assign(addBtnHandler(myCals), calorieTracker.today);
         break;
       case target == myCalsInput:
         gramsInput.value = myCalsHandler(calsIn100, myCals);
@@ -160,20 +159,20 @@ function mainHandler(event) {
         calorieTracker.memo = memoHandler(memoInput.value);
     }
   }
-  saveData(calorieTracker, 'calorieTracker');
   fillPage(calorieTracker);
 }
 
 function fillPage(calorieTracker) {
+  saveData(calorieTracker, 'calorieTracker');
   let { today, memo, calorieHistory } = calorieTracker;
   rowsUl.innerHTML = addAllTodayRows(today);
-  memoInput.value = memo;
+  memoInput.value = memoHandler(memo);
   totalDiv.innerHTML = totalHandler(today);
   historyDiv.innerHTML = historyRows(calorieHistory);
 }
 
 function onLoad() {
-  let calorieTracker = {};
+  calorieTracker = {};
   calorieTracker = loadData('calorieTracker');
   calorieTracker.todayDate = calorieTracker.todayDate || Date.now();
   calorieTracker.today = calorieTracker.today || {};
