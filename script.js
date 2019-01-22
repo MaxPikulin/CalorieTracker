@@ -2,7 +2,7 @@
  *
  *TODO: Change view to better one, when on mobile (increase font size, layout)
  *TODO: Maybe. If note exists, total counts down to note value, if not, total as usual.
- *TODO: Maybe. Change way of filling page with data. One function to do it, it receive object with data, or global object.
+ *
  *
  *
  */
