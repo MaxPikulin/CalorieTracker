@@ -83,15 +83,27 @@ li {
   left: 150px;
   padding: 3px;
   border-radius: 5px;
-  
+  transition: opacity 0.5s;
   background-color: pink;
 }
 
 .hidden {
+  opacity: 0;
   visibility: hidden;
 }
 .visible {
+  opacity: 1;
   visibility: visible;
+}
+.pointer {
+  width: 16px;
+  height: 16px;
+  background-color: pink;
+  position: inherit;
+  transform: rotate(45deg);
+  top: 5px;
+  left: -7px;
+  z-index: -1;
 }
 
 /* @media screen and (max-width: 600px) {

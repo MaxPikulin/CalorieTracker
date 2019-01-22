@@ -167,6 +167,12 @@ function todayToHistory() {
 
 function deleteRow(event) {
   event.stopPropagation();
+  let positionTarget = event.target.getBoundingClientRect();
+  let positionWindow = deleteRowWindow.getBoundingClientRect();
+  let middleTarget = positionTarget.height / 2;
+  let middleWindow = positionWindow.height / 2;
+  deleteRowWindow.style.top = `${positionTarget.top + middleTarget - middleWindow}px`;
+  deleteRowWindow.style.left = `${positionTarget.left + positionTarget.width + 20}px`;
   deleteRowWindow.dataset.rowid = event.target.dataset.id;
   deleteRowWindow.classList.remove('hidden');
 }
