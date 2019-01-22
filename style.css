@@ -94,7 +94,7 @@ li {
   visibility: visible;
 }
 
-@media screen and (max-width: 600px) {
+/* @media screen and (max-width: 600px) {
   body {
     background: fuchsia;
     font-size: 40px;
@@ -105,4 +105,4 @@ li {
   .today, .history {
     width: 100px;
   }
-}
+} */
