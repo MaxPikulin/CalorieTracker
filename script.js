@@ -151,13 +151,13 @@ function todayToHistory() {
     return;
   } else {
     // console.log('other day');
-    calorieTracker.calorieHistory.unshift([currentDMY, () => {
+    calorieTracker.calorieHistory.unshift([currentDMY, (() => {
       let total = 0;
       for (let row in calorieTracker.today) {
-        total += calorieTracker.today[row];
+        total += +calorieTracker.today[row];
       }
       return total;
-    }]);
+    })()]);
     calorieTracker.today = [];
     historyRows();
     calorieTracker.todayDate = currentDate;
