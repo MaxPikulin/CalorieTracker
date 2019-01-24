@@ -120,8 +120,8 @@ function sameDay(todayDate) {
     return false; // other day
 }
 
-function todayToHistory(today) {
-  let currentDMY = new Date().toLocaleDateString('en-GB');
+function todayToHistory(today, todayDate) {
+  let currentDMY = new Date(todayDate).toLocaleDateString('en-GB');
   return [currentDMY, totalHandler(today)];
 }
 
@@ -195,10 +195,23 @@ function onLoad() {
   calorieTracker.today = calorieTracker.today || {};
   calorieTracker.memo = calorieTracker.memo || '';
   calorieTracker.calorieHistory = calorieTracker.calorieHistory || [];
+  
+  //temp to fix datas, then delete "fixed" prop.
+  if (!calorieTracker.fixed) {
+    calorieTracker.calorieHistory = calorieTracker.calorieHistory.map(row => {
+      let date = row[0].split('/');
+      date[0]--;
+      let result = [date.join('/'), row[1]];
+      return result;
+    });
+    calorieTracker.fixed = true;
+    saveData(calorieTracker, 'calorieTracker');
+  }
+  //temp
 
   let { todayDate, today } = calorieTracker;
   if (!sameDay(todayDate)) {
-    calorieTracker.calorieHistory.unshift(todayToHistory(today));
+    calorieTracker.calorieHistory.unshift(todayToHistory(today, todayDate));
     calorieTracker.todayDate = Date.now();
     calorieTracker.today = {};
   }
