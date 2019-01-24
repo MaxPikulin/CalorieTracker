@@ -86,12 +86,29 @@ function memoHandler(memo) {
   return memo;
 }
 
-function historyRows(calorieHistory) {
-  if (!calorieHistory) return '';
+function historyRows(history) {
+  const nameOfDay = (string) => {
+    let date = string.split('/').reverse();
+    date = new Date(date).toString().slice(0, 3);
+    return date;
+  }
+  if (!history) return '';
   let rows = '';
-  calorieHistory.forEach((data) => {
-    rows += `<div>${data[1]} (${data[0]})</div>`;
-  });
+  let length = history.length;
+  let total = 0;
+  let daysOfWeek = 0;
+  for (let i = length - 1; i >= 0; i--) {
+    let row = history[i];
+    let day = nameOfDay(row[0]);
+    daysOfWeek++;
+    total += row[1];
+    let weekly = '';
+    if (day == 'Sun' || i == 0) {
+      weekly = ` Total: ${total} avg: ${Math.ceil(total / daysOfWeek)}`;
+      total = daysOfWeek = 0;
+    }
+    rows = `<div>${row[1]} (${row[0]}) ${day}.${weekly}</div>` + rows;
+  }
   return rows;
 }
 
