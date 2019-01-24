@@ -222,3 +222,5 @@ onLoad();
 
 document.addEventListener('click', mainHandler);
 document.addEventListener('keyup', mainHandler);
+// window events.
+window.addEventListener('focus', () => onLoad());
