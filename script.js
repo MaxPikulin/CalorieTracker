@@ -47,7 +47,8 @@ function gramsHandler(calsIn100, grams) {
 
 function addBtnHandler(myCals) {
   let ts = Date.now();
-  return { [ts]: myCals };
+  return {
+    [ts]: myCals };
 }
 
 function addTodayRow(row, timestamp) {
@@ -163,8 +164,9 @@ function mainHandler(event) {
     }
   } else if (event.type == 'keyup') {
     switch (true) {
-      case (event.keyCode == 13 && target == myCalsInput):
-        calorieTracker.today = Object.assign(addBtnHandler(myCals), calorieTracker.today);
+      case (event.keyCode == 13):
+        if (target == myCalsInput || target == gramsInput)
+          calorieTracker.today = Object.assign(addBtnHandler(myCals), calorieTracker.today);
         break;
       case target == myCalsInput:
         gramsInput.value = myCalsHandler(calsIn100, myCals);
@@ -195,7 +197,7 @@ function onLoad() {
   calorieTracker.today = calorieTracker.today || {};
   calorieTracker.memo = calorieTracker.memo || '';
   calorieTracker.calorieHistory = calorieTracker.calorieHistory || [];
-  
+
   //temp to fix datas, then delete "fixed" prop.
   if (!calorieTracker.fixed) {
     calorieTracker.calorieHistory = calorieTracker.calorieHistory.map(row => {
