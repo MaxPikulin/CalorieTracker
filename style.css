@@ -117,6 +117,13 @@ li {
   padding: 3px;
 }
 
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
+}
 /* @media screen and (max-width: 600px) {
   body {
     background: fuchsia;
