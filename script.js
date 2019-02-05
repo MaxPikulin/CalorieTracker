@@ -87,7 +87,7 @@ function memoHandler(memo) {
   return memo;
 }
 
-function historyRows(history) {
+function historyRows(history, memo) {
   const nameOfDay = (string) => {
     let date = string.split('/').reverse();
     date = new Date(date).toString().slice(0, 3);
@@ -105,6 +105,7 @@ function historyRows(history) {
     total += row[1];
     let weekly = '';
     if (day == 'Sun' || i == 0) {
+      document.querySelector('.toeat').textContent = toEat(memo, total);
       weekly = ` Total: ${total} avg: ${Math.ceil(total / daysOfWeek)}`;
       total = daysOfWeek = 0;
     }
@@ -135,6 +136,20 @@ function deleteRow(event) {
   deleteRowWindow.style.left = `${positionTarget.left + positionTarget.width + 20}px`;
   deleteRowWindow.dataset.rowid = event.target.dataset.id;
   deleteRowWindow.classList.remove('hidden');
+}
+
+function toEat(memo, weekTotal) {
+  let normDay = new Date().getDay();
+  if (normDay == 0) { 
+    normDay = 6;
+  } else {
+    normDay--;
+  }
+  let daysLeft = 7 - normDay;
+  let weeklyLimit = memo * 7;
+  let amountLeft = weeklyLimit - weekTotal;
+  let dailyAvg = Math.floor(amountLeft / daysLeft);
+  return dailyAvg;
 }
 
 function deleteRowConfirmBtnHandler(event) {
@@ -187,7 +202,7 @@ function fillPage(calorieTracker) {
   rowsUl.innerHTML = addAllTodayRows(today);
   memoInput.value = memoHandler(memo);
   totalDiv.innerHTML = totalHandler(today);
-  historyDiv.innerHTML = historyRows(calorieHistory);
+  historyDiv.innerHTML = historyRows(calorieHistory, memo);
 }
 
 function onLoad() {
@@ -199,14 +214,8 @@ function onLoad() {
   calorieTracker.calorieHistory = calorieTracker.calorieHistory || [];
 
   //temp to fix datas, then delete "fixed" prop.
-  if (!calorieTracker.fixed) {
-    calorieTracker.calorieHistory = calorieTracker.calorieHistory.map(row => {
-      let date = row[0].split('/');
-      date[0]--;
-      let result = [date.join('/'), row[1]];
-      return result;
-    });
-    calorieTracker.fixed = true;
+  if (calorieTracker.fixed) {
+    delete calorieTracker.fixed;
     saveData(calorieTracker, 'calorieTracker');
   }
   //temp

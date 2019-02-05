@@ -109,6 +109,14 @@ li {
   z-index: -1;
 }
 
+.flex {
+  display: flex;
+}
+
+.pa3 {
+  padding: 3px;
+}
+
 /* @media screen and (max-width: 600px) {
   body {
     background: fuchsia;
