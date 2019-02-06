@@ -15,6 +15,7 @@ const resultDiv = document.querySelector('.result');
 const addBtn = document.querySelector('.addBtn');
 const rowsUl = document.querySelector('.rowsUl');
 const totalDiv = document.querySelector('.total');
+const totalLeftDiv = document.querySelector('.totalLeft');
 const historyDiv = document.querySelector('.history');
 const deleteRowWindow = document.querySelector('.deleteRowWindow');
 const deleteRowConfirmBtn = document.querySelector('.deleteRowConfirmBtn');
@@ -49,7 +50,8 @@ function gramsHandler(calsIn100, grams) {
 function addBtnHandler(myCals) {
   let ts = Date.now();
   return {
-    [ts]: myCals };
+    [ts]: myCals
+  };
 }
 
 function addTodayRow(row, timestamp) {
@@ -141,7 +143,7 @@ function deleteRow(event) {
 
 function toEat(memo, weekTotal) {
   let normDay = new Date().getDay();
-  if (normDay == 0) { 
+  if (normDay == 0) {
     normDay = 6;
   } else {
     normDay--;
@@ -211,7 +213,9 @@ function fillPage(calorieTracker) {
   let { today, memo, calorieHistory } = calorieTracker;
   rowsUl.innerHTML = addAllTodayRows(today);
   memoInput.value = memoHandler(memo);
-  totalDiv.innerHTML = totalHandler(today);
+  let total = totalHandler(today);
+  totalLeftDiv.innerHTML = 'Left: ' + (memo - total);
+  totalDiv.innerHTML = 'Total: ' + total;
   historyDiv.innerHTML = historyRows(calorieHistory, memo);
 }
 
