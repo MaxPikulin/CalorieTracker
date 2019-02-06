@@ -105,7 +105,7 @@ function historyRows(history, memo) {
     let row = history[i];
     let day = nameOfDay(row[0]);
     daysOfWeek++;
-    total += row[1];
+    total += +row[1];
     let weekly = '';
     if (day == 'Sun' || i == 0) {
       toEat(memo, total);
