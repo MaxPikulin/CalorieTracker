@@ -150,7 +150,7 @@ function toEat(memo, weekTotal) {
   }
   let daysLeft = 7 - normDay;
   let weeklyLimit = memo * 7;
-  let amountLeft = weeklyLimit - weekTotal;
+  let amountLeft = weeklyLimit - (normDay === 0 ? 0 : weekTotal);
   let dailyAvg = Math.floor(amountLeft / daysLeft);
   toEatDiv.classList.remove('green', 'red');
   if (dailyAvg > memo) {
