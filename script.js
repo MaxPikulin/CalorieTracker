@@ -21,6 +21,7 @@ const deleteRowWindow = document.querySelector('.deleteRowWindow');
 const deleteRowConfirmBtn = document.querySelector('.deleteRowConfirmBtn');
 const clearTodayBtn = document.querySelector('.clearToday');
 const toEatDiv = document.querySelector('.toeat');
+const fastedChb = document.querySelector('#fasted');
 
 let calorieTracker = {};
 let calsIn100 = '';
@@ -148,7 +149,7 @@ function toEat(memo, weekTotal) {
   } else {
     normDay--;
   }
-  let daysLeft = 7 - normDay;
+  let daysLeft = 7 - normDay  -  +fastedChb.checked;
   let weeklyLimit = memo * 7;
   let amountLeft = weeklyLimit - (normDay === 0 ? 0 : weekTotal);
   let dailyAvg = Math.floor(amountLeft / daysLeft);
