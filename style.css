@@ -16,6 +16,7 @@
   width: 600px;
   height: 450px;
   border: 1px solid rgb(174, 255, 252);
+  overflow: auto;
 }
 .history>div {
   padding: 3px 0px 0px 7px;
