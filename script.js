@@ -1,12 +1,3 @@
-/*
- *
- *TODO: Change view to better one, when on mobile (increase font size, layout)
- *TODO: Maybe. If note exists, total counts down to note value, if not, total as usual.
- *
- *
- *
- */
-
 const calsIn100Input = document.querySelector('.calsIn100');
 const gramsInput = document.querySelector('.grams');
 const myCalsInput = document.querySelector('.myCals');
@@ -144,8 +135,10 @@ function deleteRow(event) {
 
 function toEat(memo, weekTotal) {
   let normDay = new Date().getDay();
+  let fastedChecked = +fastedChb.checked;
   if (normDay == 0) {
     normDay = 6;
+    fastedChecked = 0;
   } else {
     normDay--;
   }
