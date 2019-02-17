@@ -142,7 +142,7 @@ function toEat(memo, weekTotal) {
   } else {
     normDay--;
   }
-  let daysLeft = 7 - normDay  -  +fastedChb.checked;
+  let daysLeft = 7 - normDay - fastedChecked;
   let weeklyLimit = memo * 7;
   let amountLeft = weeklyLimit - (normDay === 0 ? 0 : weekTotal);
   let dailyAvg = Math.floor(amountLeft / daysLeft);
