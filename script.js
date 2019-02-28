@@ -13,6 +13,7 @@ const deleteRowConfirmBtn = document.querySelector('.deleteRowConfirmBtn');
 const clearTodayBtn = document.querySelector('.clearToday');
 const toEatDiv = document.querySelector('.toeat');
 const fastedChb = document.querySelector('#fasted');
+const toEatLeftDiv = document.querySelector('.toeat-left');
 
 let calorieTracker = {};
 let calsIn100 = '';
@@ -154,6 +155,7 @@ function toEat(memo, weekTotal) {
     toEatDiv.classList.add('red');
     toEatDiv.classList.remove('green');
   }
+  calorieTracker.dailyAvg = dailyAvg;
   toEatDiv.textContent = dailyAvg;
   return dailyAvg;
 }
@@ -204,12 +206,13 @@ function mainHandler(event) {
 
 function fillPage(calorieTracker) {
   saveData(calorieTracker, 'calorieTracker');
-  let { today, memo, calorieHistory } = calorieTracker;
+  let { today, memo, calorieHistory, dailyAvg } = calorieTracker;
   rowsUl.innerHTML = addAllTodayRows(today);
   memoInput.value = memoHandler(memo);
   let total = totalHandler(today);
   totalLeftDiv.innerHTML = 'Left: ' + (memo - total);
   totalDiv.innerHTML = 'Total: ' + total;
+  toEatLeftDiv.textContent = `(${dailyAvg ? dailyAvg - total : ''})`;
   historyDiv.innerHTML = historyRows(calorieHistory, memo);
 }
 
