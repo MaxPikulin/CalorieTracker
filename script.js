@@ -157,6 +157,7 @@ function toEat(memo, weekTotal) {
   }
   calorieTracker.dailyAvg = dailyAvg;
   toEatDiv.textContent = dailyAvg;
+  // ?
   saveData(calorieTracker, 'calorieTracker');
   return dailyAvg;
 }
