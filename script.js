@@ -225,6 +225,7 @@ function onLoad() {
   calorieTracker.today = calorieTracker.today || {};
   calorieTracker.memo = calorieTracker.memo || '';
   calorieTracker.calorieHistory = calorieTracker.calorieHistory || [];
+  calorieTracker.dailyAvg = calorieTracker.dailyAvg || '';
 
   //temp to fix datas, then delete "fixed" prop.
   if (calorieTracker.fixed) {
