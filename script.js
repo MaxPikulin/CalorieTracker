@@ -42,6 +42,8 @@ function gramsHandler(calsIn100, grams) {
 
 function addBtnHandler(myCals) {
   let ts = Date.now();
+  myCalsInput.focus();
+  myCalsInput.select();
   return {
     [ts]: myCals
   };
